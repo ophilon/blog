@@ -1,2 +1,2 @@
 # ophilon's blog
-проба блога и тем Jekyll
+проба блога и встроенных тем Jekyll

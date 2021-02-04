@@ -23,23 +23,23 @@ JQ в действительности полноценный язык прог�
 как быстро её посмотреть и использовать в дальнейших запросах. Вот
 эта команда:
 
-  ... $ jq '[paths|join(".")]' Bookmarks|head -n 16
-  [
-    "checksum",
-    "roots",
-    "roots.bookmark_bar",
-    "roots.bookmark_bar.children",
-    "roots.bookmark_bar.children.0",
-    "roots.bookmark_bar.children.0.children",
-    "roots.bookmark_bar.children.0.children.0",
-    "roots.bookmark_bar.children.0.children.0.children",
-    "roots.bookmark_bar.children.0.children.0.children.0",
-    "roots.bookmark_bar.children.0.children.0.children.0.date_added",
-    "roots.bookmark_bar.children.0.children.0.children.0.guid",
-    "roots.bookmark_bar.children.0.children.0.children.0.id",
-    "roots.bookmark_bar.children.0.children.0.children.0.name",
-    "roots.bookmark_bar.children.0.children.0.children.0.type",
-    "roots.bookmark_bar.children.0.children.0.children.0.url",
+    ... $ jq '[paths|join(".")]' Bookmarks|head -n 16
+    [
+      "checksum",
+      "roots",
+      "roots.bookmark_bar",
+      "roots.bookmark_bar.children",
+      "roots.bookmark_bar.children.0",
+      "roots.bookmark_bar.children.0.children",
+      "roots.bookmark_bar.children.0.children.0",
+      "roots.bookmark_bar.children.0.children.0.children",
+      "roots.bookmark_bar.children.0.children.0.children.0",
+      "roots.bookmark_bar.children.0.children.0.children.0.date_added",
+      "roots.bookmark_bar.children.0.children.0.children.0.guid",
+      "roots.bookmark_bar.children.0.children.0.children.0.id",
+      "roots.bookmark_bar.children.0.children.0.children.0.name",
+      "roots.bookmark_bar.children.0.children.0.children.0.type",
+      "roots.bookmark_bar.children.0.children.0.children.0.url",
 
 Всего строк по количеству записей в json файле, нам достаточно
 увидеть структуру самого первого блока данных, далее она в основном

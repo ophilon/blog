@@ -23,25 +23,23 @@ JQ в действительности полноценный язык прог�
 как быстро её посмотреть и использовать в дальнейших запросах. Вот
 эта команда:
 
-`
-... $ jq '[paths|join(".")]' Bookmarks|head -n 16
-[
-  "checksum",
-  "roots",
-  "roots.bookmark_bar",
-  "roots.bookmark_bar.children",
-  "roots.bookmark_bar.children.0",
-  "roots.bookmark_bar.children.0.children",
-  "roots.bookmark_bar.children.0.children.0",
-  "roots.bookmark_bar.children.0.children.0.children",
-  "roots.bookmark_bar.children.0.children.0.children.0",
-  "roots.bookmark_bar.children.0.children.0.children.0.date_added",
-  "roots.bookmark_bar.children.0.children.0.children.0.guid",
-  "roots.bookmark_bar.children.0.children.0.children.0.id",
-  "roots.bookmark_bar.children.0.children.0.children.0.name",
-  "roots.bookmark_bar.children.0.children.0.children.0.type",
-  "roots.bookmark_bar.children.0.children.0.children.0.url",
-`
+  ... $ jq '[paths|join(".")]' Bookmarks|head -n 16
+  [
+    "checksum",
+    "roots",
+    "roots.bookmark_bar",
+    "roots.bookmark_bar.children",
+    "roots.bookmark_bar.children.0",
+    "roots.bookmark_bar.children.0.children",
+    "roots.bookmark_bar.children.0.children.0",
+    "roots.bookmark_bar.children.0.children.0.children",
+    "roots.bookmark_bar.children.0.children.0.children.0",
+    "roots.bookmark_bar.children.0.children.0.children.0.date_added",
+    "roots.bookmark_bar.children.0.children.0.children.0.guid",
+    "roots.bookmark_bar.children.0.children.0.children.0.id",
+    "roots.bookmark_bar.children.0.children.0.children.0.name",
+    "roots.bookmark_bar.children.0.children.0.children.0.type",
+    "roots.bookmark_bar.children.0.children.0.children.0.url",
 
 Всего строк по количеству записей в json файле, нам достаточно
 увидеть структуру самого первого блока данных, далее она в основном
@@ -52,34 +50,29 @@ JQ в действительности полноценный язык прог�
 Хром умеет импортировать закладки в виде .html файла. Ссылка в этом файле
 выглядит таким образом:
 
-`
         <DT><A HREF="https://www.youtube.com/watch?v=qbEPae8YNbs&t=3142s" ADD_DATE="0">Deep Dive on Amazon ECS - Brent Langston</A>
         <DT><A HREF="https://aws.amazon.com/blogs/aws/new-import-existing-resources-into-a-cloudformation-stack/" ADD_DATE="0">Import Existing Resources into a CloudFormation Stack</A>
-`
 
 Таким образом, нам надо достать из json файла все значения .url и
 .name, затем добавить их в таблицу .html как строки. Значение ADD_DATE не
 обязательно.  Вот так это извлекается из уже знакомой нам структуры
 данных .json файла:
 
-`
-... $ jq '.roots.bookmark_bar.children[].children[] | .url, .name' Bookmarks|tail -n 4
-"http://lib.rus.ec/b/285485/read"
-"Мир многих миров. Физики в поисках иных вселенных (fb2) | Либрусек"
-"https://picasaweb.google.com/Dr.Anticommunij"
-"Picasa Web Albums - ophil"
-`
+  ... $ jq '.roots.bookmark_bar.children[].children[] | .url, .name' Bookmarks|tail -n 4
+  "http://lib.rus.ec/b/285485/read"
+  "Мир многих миров. Физики в поисках иных вселенных (fb2) | Либрусек"
+  "https://picasaweb.google.com/Dr.Anticommunij"
+  "Picasa Web Albums - ophil"
 
 Здесь вместо индекса массива в .json файле использовано обозначение
 [], означающее итерацию по всем элементам массива. Идём дальше. С
 такой же лёгкостью можно добавить в вывод желаемые строки, чередуя
 строки в фильтре со значениями из хэша:
 
-`
-... $ jq -jr '.roots.bookmark_bar.children[].children[] | ("<DT><A HREF=\"", .url, "\">", .name, "</A>\n")' Bookmarks|tail -n 2
-<DT><A HREF="http://lib.rus.ec/b/285485/read">Мир многих миров. Физики в поисках иных вселенных (fb2) | Либрусек</A>
-<DT><A HREF="https://picasaweb.google.com/Dr.Anticommunij">Picasa Web Albums - ophil</A>
-`
+  ... $ jq -jr '.roots.bookmark_bar.children[].children[] | ("<DT><A HREF=\"", .url, "\">", .name, "</A>\n")' Bookmarks|tail -n 2
+  <DT><A HREF="http://lib.rus.ec/b/285485/read">Мир многих миров. Физики в поисках иных вселенных (fb2) | Либрусек</A>
+  <DT><A HREF="https://picasaweb.google.com/Dr.Anticommunij">Picasa Web Albums - ophil</A>
+
 
 Внимательный читатель заметил, что выше использованы 2 опции запуска jq:
 
@@ -94,10 +87,9 @@ JQ в действительности полноценный язык прог�
 закрытия таблицы в самом экспортированном файле нужно удалить
 перед добавленными строками и вставить в самый конец:
 
-`
-    </DL><p>
-</DL><p>
-`
+
+      </DL><p>
+  </DL><p>
 
 Импорт покажет все закладки без разбиения на папки, но это лишь
 хороший повод навести порядок, удалить ненужные и отсортировать

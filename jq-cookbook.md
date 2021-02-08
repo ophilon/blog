@@ -109,3 +109,5 @@ JQ в действительности полноценный язык прог�
 Кроме самой [документации](https://stedolan.github.io/jq/manual/), есть также 
 [tutorial](https://stedolan.github.io/jq/tutorial/), [wiki](https://github.com/stedolan/jq/wiki),
 [FAQ](https://github.com/stedolan/jq/wiki/FAQ) и [ещё один сборник рецептов](https://github.com/stedolan/jq/wiki/Cookbook).
+
+###            **[вернуться обратно в блог](index.md)**

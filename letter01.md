@@ -57,7 +57,7 @@
 выполняется мгновенно, напр., что это у нас только что выполнилось??
 
     ... $ locate updatedb
-    /etc/alternatives/updatedb     
+    /etc/alternatives/updatedb
     /etc/alternatives/updatedb.1.gz
     /usr/bin/updatedb
     /usr/bin/updatedb.findutils

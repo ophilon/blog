@@ -1,10 +1,10 @@
 name: Jekyll Actions
   # You may pin to the exact commit or the version.
   # uses: helaili/jekyll-action@a48b8b3f5520f3cb5d92aaad1dfb4069b708e7c9
-  uses: helaili/jekyll-action@2.1.0
-  with:
+uses: helaili/jekyll-action@2.1.0
+with:
     # The GITHUB_TOKEN secret
-    token: # optional
+  token: # optional
     # The Jekyll environment to build
     jekyll_env: # optional
     # The Jekyll website source directory

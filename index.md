@@ -2,7 +2,7 @@
 
 ### [jq, yq - запросы к структурированным текстовым файлам ](05.yq.md)
 
-утилиты jq, yq, форматы yaml|json|props|csv|tsv|xml|base64|uri|toml|lua
+утилиты jq, yq, форматы `yaml|json|props|csv|tsv|xml|base64|uri|toml|lua`
 
 ### [выбираем и настраиваем ВМ для облака](02.fc41.md)
 

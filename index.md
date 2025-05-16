@@ -2,7 +2,7 @@
 
 ### [пайплайны и хуки в git](03.pipeline.md)
 
-утилита **make**, docker contexts, podman --connection для деплоя на удалённом сервере; git hooks
+утилита **make**, docker contexts, podman system connection для деплоя на удалённом сервере; git hooks
 
 ### [jq, yq - запросы к структурированным текстовым файлам ](05.yq.md)
 

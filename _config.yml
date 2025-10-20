@@ -1,3 +1,8 @@
+title: "блог local"
+description: proba Jekyll themes for personal blog
+baseurl: "/blog" # the subpath of your site, e.g. /blog
+url: "https://ophils.localnet" #
 theme: jekyll-theme-slate
 locale: ru_RU
 site_name: "блог О.Филона"
+destination: /var/www/blog/

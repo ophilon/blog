@@ -1,0 +1,633 @@
+# изучаем контейнеры изнутри
+
+Поговорим о контейнерах, сделаем контейнер руками, через команды Линукс, и поспорим о терминологии. 
+Почему надо отвыкать от слова докер и именовать грамотно - контейнер. Похожую ситуацию вспоминаю в древние времена, когда в постсоветскую действительность вдруг проникла фотокопировальная техника, почти сразу получившая имя ксерокс, глагольная форма, пардонс, "ксерить". Доходило до абсурда: ксерокс марки кэнон!! 
+
+
+# goo : is the docker registered trademark as windows(C) ??
+
+Да, Docker — это зарегистрированная торговая марка, точно так же, как и Windows.
+
+[1] (https://mutagen.io/legal/trademarks)
+[2] (https://www.trademarkia.com/docker-87454105)
+
+Владельцем этого товарного знака является коммерческая компания Docker, Inc. (ранее известная как dotCloud). Несмотря на то, что сама технология контейнеризации строится на базе открытых исходных кодов Linux (Open Source), само слово «Docker» и его логотип (кит, везущий контейнеры) жестко защищены законами о товарных знаках.
+  [1] (https://www.docker.com/ja-jp/legal/trademark-guidelines/)
+  [2] (https://en.wikipedia.org/wiki/Docker,_Inc.)
+  [3] (https://www.trademarkia.com/docker-87454105)
+  [4] (https://mutagen.io/legal/trademarks)
+
+Вот несколько важных нюансов о том, как работает торговая марка Docker:
+
+1. Что защищено товарным знаком?
+
+Зарегистрированная марка DOCKER® распространяется на:
+
+* [1] (https://trademarks.justia.com/874/54/docker-87454105.html)
+* Программное обеспечение и утилиты для разработки (Docker Desktop, Docker Hub);
+* Фирменное наименование и логотипы компании.
+  [1] (https://www.docker.com/ja-jp/legal/trademark-guidelines/)
+  [2] (https://en.wikipedia.org/wiki/Docker,_Inc.)
+  [3] (https://docs.docker.com/get-started/docker-overview/)
+
+2. Строгие правила использования бренда (Trademark Guidelines)
+
+Компания Docker, Inc. очень ревностно защищает свое имя (по аналогии с тем, как Microsoft защищает Windows):
+  [1] (https://www.docker.com/ja-jp/legal/trademark-guidelines/)
+  [2] (https://mutagen.io/legal/trademarks)
+
+• Именование сторонних проектов: Вы не можете назвать свою собственную программу или сайт, например, «Docker-Manager». Правилами Docker Trademark Guidelines предписано использовать формулировки вроде «Manager for Docker» (Менеджер для Docker), чтобы у пользователей не возникало ощущения, будто ваш продукт официально одобрен или создан самой компанией Docker.
+
+[1] (https://github.com/moby/moby/issues/15974)
+[2] (https://www.docker.com/legal/trademark-guidelines/)
+
+• Частичный ребрендинг: Из-за ограничений на торговую марку, когда базовый открытый исходный код Docker Engine был передан в проект сообщества (upstream), его пришлось переименовать в Moby.
+  [1] (https://en.wikipedia.org/wiki/Docker,_Inc.)
+
+3. Разница между OSS (Open Source Software) и Лицензией на бренд
+
+Ваш эксперимент по ручному созданию контейнера наглядно показывает эту границу:
+
+• Ограничения cgroups, пространства имен и chroot — это свободные технологии ядра Linux, которые может использовать кто угодно.
+• Формат образов OCI (Open Container Initiative) — это открытый стандарт.
+
+Но бренд, экосистема и готовые бинарные сборки Docker — это собственность Docker, Inc. Именно поэтому для крупных коммерческих компаний использование, например, утилиты Docker Desktop стало платным по подписке, хотя ядро и низкоуровневые контейнеры остаются бесплатными.
+
+[1] (https://www.docker.com/company/newsroom/media-resources/)
+[2] (https://en.wikipedia.org/wiki/Docker,_Inc.)
+[3] (https://www.trademarkia.com/docker-87454105), [4] (https://www.docker.com/products/docker-desktop/)
+
+# goo : ok, still wonder - who is the author of docker concept ?? as you said above, the overlayfs put docker apart from lxc
+
+Автором и создателем концепции Docker является франко-американский программист и предприниматель Соломон Хайкс (Solomon Hykes)
+
+[1] (https://www.peoples.ru/undertake/soft/solomon_hykes/)
+[2] (https://deprogrammaticaipsum.com/solomon-hykes/)
+[3] (https://www.chartwellspeakers.com/speaker/solomon-hykes/)
+[4] (https://www.docker.com/contributors/solomon-hykes/)
+
+В 2008 году он основал в Париже компанию dotCloud, которая предоставляла услуги PaaS (Platform-as-a-Service). Внутри dotCloud разработчикам нужно было как-то изолированно и быстро запускать приложения клиентов на серверах. Для этого команда Соломона написала внутреннюю утилиту. В марте 2013 года на конференции PyCon Хайкс впервые показал эту утилиту миру и выложил её код в опенсорс под именем Docker. Проект произвел такой фурор, что вскоре всю компанию dotCloud переименовали в Docker, Inc.
+  [1] (https://en.wikipedia.org/wiki/Docker,_Inc.)
+  [2] (https://www.infoworld.com/article/2269272/how-docker-broke-in-half.html)
+  [3] (https://www.linkedin.com/pulse/heres-brief-history-docker-ashadozzaman-shvou-hdimc)
+  [4] (https://opensourcewatch.beehiiv.com/p/decade-docker)
+
+Вы абсолютно правы: именно подход к файловой системе (включая использование OverlayFS) и изменил саму парадигму, проведя четкую черту между Docker и классическим LXC.
+  [1] (https://www.techdivision.com/en/newsroom/lxc-vs-docker)
+  [2] (https://www.sciencedirect.com/topics/computer-science/linux-container)
+
+Главный концептуальный сдвиг: Контейнер Системы vs Контейнер Приложения
+
+До Docker существовал проект LXC (Linux Containers) (выпущенный примерно в 2008 году), который тоже использовал пространства имен и cgroups. Но идеология была совсем другой:
+  [1] (https://www.researchgate.net/publication/379716489_Toward_Optimal_Virtualization_An_Updated_Comparative_Analysis_of_Docker_and_LXD_Container_Technologies)
+  [2] (https://www.sciencedirect.com/topics/computer-science/linux-container)
+
+1. LXC — это «Системные контейнеры» (System Containers):
+
+Цель LXC — дать вам полноценную, но легковесную виртуальную машину. Когда вы запускаете LXC, внутри стартует полноценная ОС: запускается процесс инициализации (init или systemd), поднимаются системные логи, cron, ssh и так далее. У каждого контейнера свой постоянный, тяжелый rootfs. 
+[1] (https://discuss.linuxcontainers.org/t/the-main-difference-between-lxc-and-docker/8365)
+[2] (https://dev.to/atmosly/lxc-vs-docker-in-production-how-container-runtimes-behave-differently-at-scale-i1e)
+[3] (https://www.researchgate.net/publication/379716489_Toward_Optimal_Virtualization_An_Updated_Comparative_Analysis_of_Docker_and_LXD_Container_Technologies)
+[4] (https://www.techdivision.com/en/newsroom/lxc-vs-docker)
+
+2. Docker — это «Контейнеры Приложений» (Application Containers):
+
+Соломон Хайкс (https://www.google.com/search?kgmid=%2Fg%2F11bw4vd58p&q=%D0%A1%D0%BE%D0%BB%D0%BE%D0%BC%D0%BE%D0%BD+%D0%A5%D0%B0%D0%B9%D0%BA%D1%81) перевернул эту логику. Он сказал: «Нам не нужна виртуальная операционная система. Нам нужно просто изолированно запустить один конкретный процесс (например, базу данных или веб-сервер) со всеми его зависимостями». В Docker контейнер живет ровно столько, сколько живет его главный запущенный процесс (PID 1).
+
+[1] (https://www.pass4sure.com/blog/a-comparative-overview-of-docker-lxc-and-lxd-container-technologies/)
+[2] (https://dev.to/atmosly/lxc-vs-docker-in-production-how-container-runtimes-behave-differently-at-scale-i1e)
+
+Как OverlayFS разделил эти технологии
+
+Изначально (в 2013 году) Docker первой версии работал поверх того самого LXC, используя его как движок для создания пространств имен. Но Docker добавил концепцию слоев (layers) и файловых систем типа UnionFS/OverlayFS.
+  [1] (https://www.docker.com/blog/lxc-vs-docker/)
+  [2] (https://www.linkedin.com/pulse/heres-brief-history-docker-ashadozzaman-shvou-hdimc)
+  [3] (https://www.techdivision.com/en/newsroom/lxc-vs-docker)
+  [4] (https://www.sciencedirect.com/topics/computer-science/linux-container)
+
+• В LXC: если вам нужно 5 контейнеров Ubuntu, вы создаете 5 независимых копий файловой системы. Они занимают много места и ведут себя как обычные жесткие диски серверов.
+[1] (https://discuss.linuxcontainers.org/t/the-main-difference-between-lxc-and-docker/8365)
+
+• В Docker (благодаря слоям): базовый образ Ubuntu лежит в режиме Read-Only один раз на диске. Сверху с помощью OverlayFS накладывается микро-слой Read-Write для каждого контейнера.
+  [1] (https://www.techdivision.com/en/newsroom/lxc-vs-docker)
+
+Это позволило Соломону Хайксу внедрить концепцию Docker Hub и докеризации. Образы стали весить мало, их стало легко скачивать по слоям, пушить в сеть и мгновенно разворачивать на любой машине по принципу: «Собрано один раз — работает везде».
+  
+  [1] (https://www.chartwellspeakers.com/speaker/solomon-hykes/)
+  [2] (https://www.techdivision.com/en/newsroom/lxc-vs-docker)
+  [3] (https://christian-schou.com/blog/lxc-vs-docker-what-to-choose/)
+  [4] (https://www.docker.com/blog/lxc-vs-docker/)
+
+Уже в 2014 году Docker полностью отказался от LXC, написав собственную низкоуровневую библиотеку libcontainer (которая позже превратилась в стандарт runc), чтобы управлять пространствами имен, cgroups и слоями файловой системы напрямую через ядро Linux.
+  [1] (https://www.techdivision.com/en/newsroom/lxc-vs-docker)
+  [2] (https://www.docker.com/blog/lxc-vs-docker/)
+
+# goo : i'm shocked - solomon hykes created docker, then docker inc., leaved it and organized cncf !! so, the farther of docker now competes with his child ??
+
+Здесь есть очень важная историческая и юридическая деталь, которая немного меняет картину. Вы правы в своих эмоциях, но Соломон Хайкс (https://www.google.com/search?kgmid=%2Fg%2F11bw4vd58p&q=%D0%A1%D0%BE%D0%BB%D0%BE%D0%BC%D0%BE%D0%BD+%D0%A5%D0%B0%D0%B9%D0%BA%D1%81) не основывал CNCF самостоятельно и никогда не воевал со своим детищем.
+На самом деле история раскола и создания CNCF — это классическая «Игра престолов» в мире Open Source, где Docker Inc. сначала пыталась узурпировать власть, но в итоге была вынуждена пойти на мирное соглашение с гигантами индустрии.
+Вот как всё происходило в реальности:
+
+1. Кто на самом деле создал CNCF?
+
+Фонд CNCF был создан в 2015 году консорциумом ИТ-гигантов во главе с The Linux Foundation, Google, Red Hat, IBM и... самой компанией Docker Inc. Да-да, Docker был одним из основателей фонда! [1] (https://www.eweek.com/ja/virtualization/docker-at-4-the-container-revolution-continues/)
+Соломон Хайкс вошел в самый первый состав Технического комитета (TOC) CNCF в качестве представителя от Docker. Так что он не создавал CNCF «на стороне» назло Docker — он строил этот фонд как общую нейтральную площадку. [1] (https://www.platformengineeringpod.com/episode/solomon-hykes-on-docker-dagger-and-the-future-of-devops), [2] (https://www.eweek.com/cloud/cloud-native-computing-foundation-plots-a-path-to-the-future.html)
+
+2. В чем была драма и почему случился конфликт?
+
+В 2014–2016 годах между Google (создателями Kubernetes) и Docker Inc. (где Соломон Хайкс был CTO) вспыхнула настоящая война за стандарты: 
+
+  [1] (https://www.heavybit.com/library/podcasts/the-kubelist-podcast/ep-36-the-docker-story-with-solomon-hykes)
+  [2] (https://thenewstack.io/google-thanks-docker-and-solomon-hykes-comes-home/)
+
+• Амбиции Docker: Docker Inc. хотела контролировать весь стек. Они создали собственный оркестратор Docker Swarm и агрессивно продвигали его, пытаясь сделать так, чтобы контейнеры можно было запускать только через технологии Docker.
+  [1] (https://thenewstack.io/google-thanks-docker-and-solomon-hykes-comes-home/)
+
+• Ответ индустрии: Google, Red Hat и другие игроки испугались монополии одной коммерческой компании. Они сказали: «Технология контейнеров слишком важна, чтобы принадлежать одной Docker Inc.». Google пожертвовала Kubernetes в CNCF, сделав его общим достоянием.
+  [1] (https://www.sdxcentral.com/analysis/kubernetes-at-10-how-the-cloud-native-world-was-won/)
+
+В этот момент Docker Inc. оказалась под колоссальным давлением. Индустрия пригрозила полностью бойкотировать Docker и написать свой открытый движок с нуля.
+
+3. Великое перемирие и уход Соломона
+
+Чтобы спасти экосистему от раскола, сторонам пришлось договориться. Под эгидой Linux Foundation был создан комитет OCI (Open Container Initiative), куда Docker передал стандарты образов и рантайм runc. Чуть позже Docker передал в CNCF свой главный движок — containerd.
+
+  [1] (https://www.docker.com/contributors/solomon-hykes/)
+  [2] (https://thenewstack.io/google-thanks-docker-and-solomon-hykes-comes-home/)
+  [3] (https://ai.engineer/speakers/solomon-hykes)
+
+Для Соломона Хайкса это был тяжелый период. Он был хакером и творцом, а компания Docker Inc. превратилась в огромную корпорацию, разрываемую маркетингом, инвесторами и политическими войнами с Google.
+
+  [1] (https://www.docker.com/blog/au-revoir/)
+  [2] (https://www.docker.com/contributors/solomon-hykes/)
+  [3] (https://www.heavybit.com/library/podcasts/the-kubelist-podcast/ep-36-the-docker-story-with-solomon-hykes)
+
+В 2018 году Соломон официально объявил, что полностью покидает Docker Inc., написав трогательное прощальное письмо:
+  [1] (https://techcrunch.com/2018/03/28/solomon-hykes-leaves-docker-the-company-he-founded/)
+  [2] (https://www.docker.com/blog/au-revoir/)
+
+«Проекту теперь нужны профессионалы корпоративного софта для масштабирования бизнеса, а я по своей натуре — просто хакер, который любит создавать инструменты для разработчиков».
+  [1] (https://ai.engineer/speakers/solomon-hykes)
+  [2] (https://www.geekwire.com/2018/docker-co-founder-solomon-hykes-leaving-company-cites-need-enterprise-focused-cto/)
+
+Чем Соломон Хайкс занимается сейчас?
+
+Он не конкурирует с Docker и не занимается оркестрацией в CNCF. Он вернулся к тому, что любит больше всего — к программированию с нуля. [1] (https://www.youtube.com/watch?v=xUJy1rnRHE0)
+
+В 2019 году он основал новый стартап Dagger.io. Это продвинутый движок для автоматизации CI/CD пайплайнов, который (по иронии судьбы) запускает шаги сборки внутри... контейнеров. Проекты Docker Inc. и Dagger сейчас являются технологическими партнерами, и Соломон регулярно выступает на конференциях, тепло общаясь с новой командой Docker.
+
+[1] (https://www.docker.com/blog/au-revoir/)
+[2] (https://www.heavybit.com/library/podcasts/the-kubelist-podcast/ep-36-the-docker-story-with-solomon-hykes)
+[3] (https://www.platformengineeringpod.com/episode/solomon-hykes-on-docker-dagger-and-the-future-of-devops)
+[4] (https://thenewstack.io/google-thanks-docker-and-solomon-hykes-comes-home/)
+
+Так что «отец контейнеров» не воюет со своим ребенком — он просто отдал его взрослеть в большую ИТ-семью (CNCF), а сам ушел воспитывать нового технологического «младенца».
+[1] (https://www.youtube.com/watch?v=xUJy1rnRHE0)
+[2] (https://www.sdxcentral.com/analysis/kubernetes-at-10-how-the-cloud-native-world-was-won/)
+
+# goo : i see at https://github.com/docker is a big organization 33 persons and 156 repos. How many developers that github org works directly or sponsored by Docker Inc.
+
+Цифра 33 человека на странице организации GitHub отображает исключительно тех сотрудников Docker Inc., которые вручную сделали свои профили публичными для этой конкретной организации. Реальный масштаб команды разработчиков и поддерживаемых специалистов значительно шире.
+В экосистеме Docker разработчики разделены на три основные категории:
+
+1. Штатные инженеры Docker Inc. (Direct Employees)
+
+В самой компании Docker Inc. работает порядка 500–600 сотрудников (по данным корпоративных отчетов и LinkedIn). Из них около 150–200 человек — это инженеры, программисты, архитекторы и специалисты по безопасности.
+Они распределены по разным направлениям:
+• Core Team: Разработка Docker CLI, Docker Compose и интеграций.
+• Desktop & Hub Team: Разработка закрытых и коммерческих продуктов (Docker Desktop для Mac/Windows/Linux, Docker Hub).
+• AI & Sandboxes (Новое направление): Команды, создающие среду для ИИ-агентов (проекты sbx, docker-agent).
+
+2. Независимые мейнтейнеры (Moby Project)
+
+Большая часть открытого движка Docker живет в организации github.com. Это ядро контейнеризации.
+• Здесь кодом управляют не только сотрудники Docker Inc., но и инженеры из Microsoft, Red Hat, IBM, Google, Intel и независимые разработчики со всего мира.
+• Исторически вклад стороннего сообщества в core-репозитории Docker составляет более 60% от общего объема кода.
+
+3. Программа спонсорства Docker (DSOS)
+
+Docker Inc. напрямую не платит индивидуальные зарплаты тысячам опенсорс-разработчиков через систему донатов, но у них действует масштабная программа Docker-Sponsored Open Source (DSOS):
+• Программа поддерживает тысячи некоммерческих open-source проектов по всему миру.
+• Вместо денег Docker спонсирует их инфраструктурой: предоставляет разработчикам этих проектов бесплатные коммерческие тарифы, безлимитное скачивание образов (без rate-limits), приоритетную поддержку и верифицированные бейджи (Verified Publisher) в Docker Hub. Это экономит сторонним командам огромные бюджеты на хостинг.
+
+Почему на GitHub видно только 33 человека?
+
+По умолчанию в GitHub членство сотрудников в организации является приватным (скрытым от посторонних глаз в целях безопасности, защиты от спама и хантинга). Те 33 профиля, которые вы видите (такие как @tonistiigi — создатель BuildKit, или @thaJeztah — ключевой мейнтейнер CLI) — это лишь публичные администраторы и тимлиды, которые открыли свой статус в профиле.
+
+# goo : pls, explain, how Docker Inc. works with cncf.io ?? I know they didn't patented overlayfs, donated some container spec to OCI, communicate regarding hub.docker images repo security - what else ??
+
+Взаимоотношения Docker Inc. и фонда CNCF (Cloud Native Computing Foundation) — это классический пример стратегии «coopetition» (сотрудничество + конкуренция).
+Docker фактически создал фундамент для всего облачного рынка, но чтобы технология не принадлежала одной коммерческой компании (чего боялись гиганты вроде Google, Red Hat и IBM), Docker передал свои ключевые низкоуровневые компоненты в фонды OCI (Open Container Initiative) и CNCF. [1] (http://cncf.io#:~:text=As%20part%20of%20the%20Linux,including%20Kubernetes%2C%20Envoy%2C%20and%20Prometheus.)
+Помимо стандартов OCI и безопасности образов в Docker Hub, Docker Inc. и CNCF активно взаимодействуют по следующим ключевым направлениям:
+
+1. Передача и поддержка главного движка — containerd
+
+Самый большой вклад Docker в CNCF — это передача проекта containerd (низкоуровневого демона, который управляет жизненным циклом контейнеров: скачивает слои, управляет хранилищем и запускает runc).
+
+• Как это работает сейчас: containerd является проектом уровня Graduated в CNCF (высший статус стабильности). На нем работает весь современный Kubernetes (через CRI).
+
+  [1] (http://cncf.io#:~:text=Graduated%20Projects%20considered%20stable%2C%20widely%20adopted%2C%20and%20production)
+  [2] (http://cncf.io#:~:text=As%20part%20of%20the%20Linux,including%20Kubernetes%2C%20Envoy%2C%20and%20Prometheus.)
+
+• Роль Docker: Инженеры Docker Inc. до сих пор остаются одними из главных контрибьюторов и мейнтейнеров containerd. То есть Docker развивает движок, который крутится на миллионах серверов под управлением Kubernetes по всему миру.
+
+2. Развитие технологий сборки образов — BuildKit
+
+Docker создал BuildKit — современный, невероятно быстрый движок для сборки Docker-файлов (поддерживает параллельную сборку слоев, кэширование и мульти-архитектурные сборки).
+• Связь с CNCF: Технологии BuildKit активно интегрируются в проекты CNCF. Например, проект Tekton (CI/CD инструмент в CNCF) или облачные системы сборки используют наработки BuildKit для компиляции безопасных контейнеров без необходимости запуска тяжелого Docker-демона (rootless builds).
+
+3. Безопасность цепочки поставок ПО (Software Supply Chain Security)
+
+Проблема «отравленных» и уязвимых образов — одна из главных в облачной индустрии. Docker Inc. сотрудничает с CNCF над внедрением стандартов подписи и проверки контента:
+• Notary (V2) и TUF: Docker совместно с CNCF развивает проект Notary (базирующийся на проекте The Update Framework / TUF из CNCF), который позволяет криптографически подписывать образы контейнеров.
+• Генерация SBOM (Software Bill of Materials): Docker внедрил в свои утилиты стандарты генерации SBOM. Когда вы собираете контейнер, Docker автоматически создает манифест всех библиотек внутри, что напрямую сопряжено с инициативами CNCF по безопасности артефактов.
+
+4. Стандартизация облачной разработки — Cloud Buildpacks
+
+Docker Inc. активно поддерживает проект CNCF Buildpacks (изначально созданный Heroku и Cloud Foundry).
+• Эта технология позволяет компилировать исходный код приложения в готовый OCI-совместимый контейнер вообще без написания Dockerfile. Docker интегрирует поддержку Buildpacks в свои инструменты разработчика, упрощая создание стандартизированных облачных приложений.
+
+Как разделены сферы влияния (Резюме)
+
+
+Сфера / Слой	За что отвечает CNCF / OCI	Что делает Docker Inc.
+Стандарты (OCI)	Спецификация образов и среды запуска (runtime-spec).	Адаптирует свои инструменты под стандарты, гарантируя совместимость.
+Инфраструктура (CNCF)	Оркестрация (Kubernetes), движки запуска (containerd).	Использует containerd внутри Docker Desktop, развивает код проекта.
+Инструменты Разработчика	Популяризация подходов (Cloud Native Landscaping).	Создает UI/UX коммерческие продукты (Docker Desktop, Docker Dashboard).
+
+Простыми словами: CNCF отвечает за стандарты, безопасность и работу контейнеров под капотом огромных серверных кластеров (Data Centers), а Docker Inc. фокусируется на том, чтобы локальная разработка на компьютерах программистов оставалась удобной, быстрой и бесшовно интегрировалась в эти самые кластеры. [1] (http://cncf.io#:~:text=As%20part%20of%20the%20Linux,including%20Kubernetes%2C%20Envoy%2C%20and%20Prometheus.)
+Если хотите, мы можем подробнее разобрать, как Kubernetes отказался от самого Docker (событие Dockerdeprecation в прошлых версиях) и перешел чисто на containerd, управляемый CNCF, и что это изменило для обычных разработчиков. Интересна эта архитектурная рокировка?
+
+# goo : k8s docker tech still uses
+
+Здесь кроется ключевое архитектурное заблуждение, с которым сталкиваются многие разработчики. Kubernetes не отказывался от containerd. Более того, containerd является абсолютным стандартом и дефолтным движком (Runtime) для большинства K8s-кластеров в мире (включая управляемые облака AWS EKS, Google GKE и Azure AKS).
+
+  [1] (https://www.cloudpe.com/glossary/what-is-a-container-runtime-in-kubernetes/)
+  [2] (https://oneuptime.com/blog/post/2025-12-15-what-is-containerd-and-why-do-we-need-it/view)
+  [3] (https://kubernetes.recipes/recipes/configuration/kubernetes-container-runtime-guide/)
+
+Путаница возникает из-за того, что контейнерные движки делятся на два абсолютно разных уровня:
+  [1] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+
+1. High-Level Runtime (Управляющий менеджер): Он скачивает образы из реестра, распаковывает слои OverlayFS и управляет сетью. Здесь правят containerd и CRI-O.
+  [1] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+  [2] (https://tech-insider.org/docker-vs-kubernetes-2026/)
+
+2. Low-Level Runtime (Исполнитель): Это крошечная утилита, которая берёт готовую папку, делает системные вызовы unshare, chroot, настраивает cgroups (ровно то, что вы делали вручную) и сразу завершает свою работу, оставляя процесс жить. Вот здесь и живут runc и упомянутый вами crun.
+  [1] (https://habr.com/ru/companies/domclick/articles/566224/)
+  [2] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+  [3] (https://www.tutorialworks.com/difference-docker-containerd-runc-crio-oci/)
+
+Они работают не вместо друг друга, а вместе (в связке).
+  [1] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+
+Архитектурная матрешка Kubernetes
+
+Когда вы деплоите Pod в Kubernetes, цепочка вызовов выглядит следующим образом:
+  [1] (https://kubesphere.io/blogs/part-1-explaining-container-runtimes/)
+  [2] (https://www.devopstraininginstitute.com/blog/when-is-it-better-to-use-containerd-instead-of-docker-in-kubernetes)
+  [3] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+
+```
+```text
+ ┌──────────┐      CRI (gRPC)      ┌────────────────┐      OCI Spec      ┌───────────────┐
+ │ kubelet  │ ───────────────────> │   containerd   │ ─────────────────> │ runc / crun   │
+ └──────────┘                      │  (High-Level)  │                    │  (Low-Level)  │
+                                   └────────────────┘                    └───────────────┘
+                                           │                                     │
+                                    Скачивает образ,                      Делает chroot,
+                                   выделяет IP-адрес                     namespaces, cgroups
+```
+
+1. Kubelet (агент K8s на ноде) видит, что нужно запустить контейнер. Он отправляет запрос по протоколу CRI (Container Runtime Interface).
+2. containerd принимает этот запрос. Он идет в интернет, скачивает слои вашего образа, собирает их через OverlayFS в одну папку rootfs на диске и готовит конфигурационный файл config.json по стандарту OCI.
+3. Затем containerd вызывает Low-Level Runtime (например, runc или crun), передавая ему путь к этой папке и config.json.
+4. runc / crun за доли секунды «выпекает» контейнер в ядре Linux и мгновенно отключается. Контейнер продолжает работать сам по себе.
+  [1] (https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
+  [2] (https://www.devopstraininginstitute.com/blog/when-is-it-better-to-use-containerd-instead-of-docker-in-kubernetes)
+  [3] (https://kubernetes.io/docs/concepts/containers/cri/)
+  [4] (https://www.wallarm.com/cloud-native-products-101/containerd-vs-docker-what-is-the-difference-between-the-tools)
+  [5] (https://www.tutorialworks.com/difference-docker-containerd-runc-crio-oci/)
+  [6] (https://kubesphere.io/blogs/part-1-explaining-container-runtimes/)
+  [7] (https://www.docker.com/blog/containerd-vs-docker/)
+  [8] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+
+При чем здесь crun и почему о нем все говорят?
+
+Исторически дефолтным исполнителем (Low-Level) для Docker и containerd всегда был runc (написанный на Go). Но сейчас в индустрии идет мощный сдвиг в сторону crun.
+  [1] (https://github.com/kodekloudhub/certified-kubernetes-administrator-course/blob/master/docs/02-Core-Concepts/03-Docker-vs-ContainerD.md)
+  [2] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+  [3] (https://safeguard.sh/resources/blog/container-runtime-comparison-buyer-2026)
+
+crun — это альтернатива runc, написанная чисто на языке C командой Red Hat. И вот почему он вытесняет runc на нижнем уровне:
+  [1] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+
+• Феноменальная скорость и легкость: Поскольку runc написан на Go, внутри каждого запущенного контейнера «сидит» микро-оверхед самого рантайма Go. crun написан на си, он потребляет в разы меньше памяти и создает контейнеры значительно быстрее (измеряется в миллисекундах). 
+
+  [1] (https://safeguard.sh/resources/blog/container-runtime-comparison-buyer-2026)
+  [2] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+
+• Полноценная поддержка cgroups v2: crun изначально проектировался под современную вторую версию cgroups. К слову, в актуальных версиях Kubernetes (начиная с 1.35) поддержка старых cgroup v1 полностью удалена.
+  [1] (https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
+  [2] (https://shattered.io/kubernetes-1-35-cgroup-v1-removal-2026/)
+
+• Интеграция с WASM (WebAssembly): crun умеет из коробки запускать не только Linux-контейнеры, но и легковесные WASM-файлы без использования операционной системы внутри контейнера.
+
+Что в итоге убрал Kubernetes?
+
+Kubernetes полностью выбросил Docker Engine (компонент dockershim был удален в версии 1.24).
+  [1] (https://encore.dev/articles/docker-and-kubernetes)
+  [2] (https://www.cloudpe.com/glossary/what-is-a-container-runtime-in-kubernetes/)
+Раньше K8s приходилось делать цепочку:  *Kubelet -> Dockershim -> Docker API -> containerd -> runc*. Это было громоздко. Теперь Kubernetes просто отрезал «лишнее» коммерческое лицо Docker с его утилитами сборки и обращается к containerd напрямую.
+  [1] (https://www.tutorialworks.com/difference-docker-containerd-runc-crio-oci/)
+  [2] (https://github.com/kodekloudhub/certified-kubernetes-administrator-course/blob/master/docs/02-Core-Concepts/03-Docker-vs-ContainerD.md)
+  [3] (https://medium.com/@BuildShift/kubernetes-is-ditching-docker-heres-why-it-s-not-the-end-of-the-world-8f6dd2306634)
+  [4] (https://tech-insider.org/docker-vs-kubernetes-2026/)
+
+А вот внутри самого containerd системный администратор волен выбирать низкоуровневый движок: оставить классический runc или переключить одну строчку в конфиге на сверхбыстрый crun.
+  [1] (https://www.techtarget.com/it-infrastructure/tip/A-breakdown-of-container-runtimes-for-Kubernetes-and-Docker)
+  [2] (https://safeguard.sh/resources/blog/container-runtime-comparison-buyer-2026)
+  [3] (https://www.rack2cloud.com/container-runtime-optimization-density-guide/)
+
+# goo : pls, review recommendation i often give my students - replace docker with podman, the latter is compartible with former, but helps to migrate to kubernetes via kube manifests and some subset of orckestrator api. i.e docker is deadend, while podman goes in right direction
+
+Ваша рекомендация студентам абсолютно верна в своей технической сути, но формулировка «Docker — это тупик» (dead end) может быть излишне категоричной в 2026 году. Подобный радикализм полезен для того, чтобы встряхнуть студентов и заставить их отказаться от привычных догм, однако для будущих инженеров важно понимать тонкий баланс между локальной разработкой и продакшн-инфраструктурой.
+
+Давайте разберем плюсы вашего подхода и добавим к нему важные архитектурные нюансы, которые помогут сделать вашу лекцию еще более глубокой.
+
+Почему вы на 100% правы (Сильные стороны Podman)
+
+Рекомендация переходить на Podman как на мост к Kubernetes — это отличный педагогический и практический прием. Вы даете им правильный вектор по следующим причинам:
+
+1. Концепция Подов (Pods):
+
+Docker ничего не знает о «подах» — его минимальная единица это один контейнер. Podman изначально проектировался с пониманием архитектуры Kubernetes. Студенты могут запустить несколько контейнеров внутри одного пода локально, разделяя localhost и сетевое пространство точно так же, как это будет происходить в K8s.
+
+2. Прямая интеграция через Манифесты (podman kube):
+
+Это главный убийца Docker в учебном процессе. Команды:
+	• podman kube generate — превращает запущенные локально контейнеры в чистокровный Kubernetes YAML.
+	• podman kube play — берет готовый манифест K8s и запускает его на локальном ПК без развертывания тяжелого локального кластера (вроде Minikube или Kind).
+Это идеальный бесшовный мостик к оркестрации.
+
+3. удвоенная безопасность (Daemonless) и Rootless:
+
+Docker исторически полагается на монолитный демон dockerd, работающий от имени root. Если демон упал — упали все контейнеры. Podman работает как обычная Linux-утилита (fork-exec модель). Он создает контейнеры как дочерние процессы текущего пользователя. Это приучает студентов к правильной модели безопасности с первого дня.
+
+О чем важно предупредить студентов (Нюансы рынка)
+
+Чтобы у студентов не возникло иллюзии, что Docker полностью стерт с лица земли, важно подсветить, где Docker все еще доминирует и почему он не совсем «тупик»:
+
+1. Docker Desktop — это стандарт для macOS и Windows:
+Большинство студентов и разработчиков сидят не на чистом Linux, а на Mac или Windows. На этих ОС контейнеры запускаются внутри скрытой виртуальной машины Linux. Docker Desktop доведен в этом плане до идеала (файловый кэш VirtioFS, проброс портов, GUI, управление расширениями). У Podman есть Podman Desktop, но он исторически догоняет Docker по стабильности и удобству работы с виртуальными машинами (особенно на чипах Apple Silicon).
+
+2. Экосистема локального тестирования (Testcontainers):
+В мире Java, Go, .NET безумно популярна библиотека Testcontainers (автоматический подъем баз данных в контейнерах во время прохождения интеграционных тестов). Она годами затачивалась под Docker socket. Поднять её на Podman можно, но это требует ручной настройки окружения и переменных (DOCKER_HOST), что иногда вызывает боль у новичков.
+
+3. Docker ушел в сторону ИИ и внутренней изоляции (Sandboxes):
+Docker Inc. вовремя поняла, что проиграла войну за продакшн-сервера (где теперь безраздельно царят Kubernetes и containerd). Поэтому компания переключилась на локальную экосистему разработчиков и ИИ. Современный Docker — это инструменты сборки (BuildKit), оркестрация локальных сред (новые проекты Docker Sandboxes / sbx для безопасного запуска ИИ-агентов в изолированных микро-виртуальных машинах).
+
+Сравнительный вердикт для лекции
+
+Ваш совет можно визуализировать для студентов в виде следующей матрицы выбора:
+
+
+|Критерий	|Путь Docker	|Путь Podman (Ваша рекомендация)|
+|---------|-------------|-------------------------------|
+|Конечная цель	|Написать код, собрать образ, запустить приложение локально на ноутбуке.	|Понять, как приложение будет жить в реальном Cloud Native продакшене.|
+|Идеология	|Минимализм: Один контейнер — один процесс.	|Оркестрация: Группировка контейнеров в Поды (Pods).|
+|Безопасность	|Общий root-демон (потенциальная уязвимость).	|Изолированные процессы пользователя (Rootless из коробки).|
+|Переносимость	|docker-compose.yml (проприетарный стандарт Docker).	|Kubernetes YAML (мировой стандарт enterprise-инфраструктуры).|
+
+
+Итог: Вы даете студентам великолепную долгосрочную инвестицию. Переход на Podman заставляет их сразу думать категориями Kubernetes (сетевые пространства пода, отсутствие root-прав, декларативные манифесты). Это превращает их из просто «разработчиков, умеющих запускать контейнер» в Cloud Native инженеров.
+
+
+# 🚀 Шпаргалка: От Docker к Kubernetes через Podman
+
+Эта памятка поможет вам переключить мышление с изолированных контейнеров (мировоззрение Docker) на концепцию оркестрации, управления подами и декларативных манифестов (мировоззрение Kubernetes).
+
+
+## 1. Базовый мост (Алиасы и Совместимость)
+Podman полностью совместим с CLI-командами Docker. Вы можете использовать привычный синтаксис.
+
+* **Быстрый переход для терминала:**
+  ```bash
+  alias docker=podman
+  ```
+  *После этого все команды вроде `docker run`, `docker ps`, `docker images` будут автоматически выполняться через Podman.*
+
+
+## 2. Главное отличие: Создание локального Пода (Pod)
+В Docker контейнеры изолированы друг от друга и связываются через Docker Networks. В Podman (как и в Kubernetes) минимальной единицей является **Pod** — группа контейнеров, разделяющих один IP-адрес и пространство `localhost`.
+
+### Шаг А: Создаем пустой Под и пробрасываем в него порты
+```bash
+podman pod create --name my-learning-pod -p 8080:80
+```
+
+### Шаг Б: Запускаем контейнеры внутри этого Пода
+Теперь нам не нужно пробрасывать порты для каждого контейнера отдельно. Мы просто помещаем их внутрь пода с помощью флага `--pod`:
+
+```bash
+# 1. Запускаем веб-сервер Nginx в наш под
+podman run -d --pod my-learning-pod --name web-server docker.io/library/nginx:alpine
+
+# 2. Запускаем утилиту curl в том же поде, чтобы проверить связь через localhost
+podman run --rm --pod my-learning-pod docker.io/library/curlimages/curl curl http://localhost:80
+```
+*Контейнеры внутри одного пода видят друг друга через `localhost`, как процессы на одном компьютере.*
+
+
+## 3. Магия миграции: Генерация манифестов для Kubernetes (`podman kube`)
+Вместо написания сложных YAML-файлов для Kubernetes вручную, вы можете спроектировать архитектуру приложения локально в Podman, а затем выгрузить её.
+
+### Конвертация запущенного Пода в Kubernetes YAML:
+```bash
+podman kube generate my-learning-pod > k8s-deployment.yaml
+```
+
+**Что произойдет под капотом:**
+Podman создаст валидный, чистокровный манифест Kubernetes (типа `Pod` или `Deployment`), содержащий описание всех контейнеров, портов и переменных окружения, готовый к деплою в реальный кластер (Minikube, GKE, AWS EKS).
+
+
+## 4. Обратная совместимость: Запуск манифестов Kubernetes локально
+Если у вас уже есть готовый манифест Kubernetes, вам **не нужно** разворачивать тяжелый локальный кластер (Minikube / Kind), чтобы протестировать его. Podman умеет читать их «из коробки».
+
+### Запуск K8s-манифеста на локальном ПК:
+```bash
+podman kube play k8s-deployment.yaml
+```
+
+### Удаление всего стека, описанного в манифесте:
+```bash
+podman kube down k8s-deployment.yaml
+```
+
+
+## 5. Таблица перевода концепций для студентов
+
+| Задача | Как делали в Docker (Тупиковый путь) | Как делаем в Podman ➡️ Kubernetes (Правильный путь) |
+| :--- | :--- | :--- |
+| **Управление процессами** | Демон `dockerd` с правами `root`. | Бездемонная модель (**Daemonless**), запуск от обычного пользователя (**Rootless**). |
+| **Связь между контейнерами** | `docker network create` + имена контейнеров. | Создание пода `podman pod create` + общее пространство `localhost`. |
+| **Локальный мульти-контейнер** | `docker-compose up` (Файлы `.yaml` не подходят для продакшна K8s). | `podman kube play k8s-pod.yaml` (Манифест на 100% совместим с продакшном). |
+| **Просмотр подов** | *Концепция отсутствует* | `podman pod ps` |
+| **Посмотреть логи всего пода** | Приходилось смотреть логи каждого контейнера отдельно. | `podman pod logs my-learning-pod` (Агрегирует логи всех контейнеров пода). |
+
+
+## 💡 Педагогический совет для практической работы:
+Дайте студентам задание: 
+1. Развернуть связку из двух контейнеров (например, Frontend на Nginx + Backend на Python/Node) внутри одного пода через `podman pod create`.
+2. Сгенерировать файл `k8s-deployment.yaml` с помощью `podman kube generate`.
+3. Отредактировать полученный файл (например, изменить количество реплик) и запустить его заново через `podman kube play`.
+
+
+### goo : let's make container experiment - use linux namespaces, cgroups, chroot, but neither docker nor podman to create oci (open container initiative) image
+
+# Reference Guide: Building a Linux Container from Scratch
+
+This reference architecture provides the foundational steps to create an isolated container using low-level Linux kernel primitives (**namespaces, cgroups, and chroot**) completely bypassing high-level engines like Docker or Podman.
+
+## Step-by-Step Implementation
+
+### Step 1: Prepare the Root Filesystem (`chroot` Preparation)
+
+Before isolating processes, you need an isolated root directory containing essential system binaries. You can extract a minimal distribution like **Alpine Linux** or use `debootstrap` for **Ubuntu/Debian**.
+
+```bash
+# Create a dedicated working directory
+mkdir -p ~/container-root/rootfs
+cd ~/container-root
+
+# Option A: Download and extract a minimal Alpine rootfs
+wget https://dl-cdn.alpinelinux.org/alpine/v3.18/releases/x86_64/alpine-minirootfs-3.18.3-x86_64.tar.gz
+tar -xf alpine-minirootfs-3.18.3-x86_64.tar.gz -C ./rootfs/
+
+# Option B: Bootstrap an Ubuntu system (Debian/Ubuntu hosts)
+# sudo debootstrap focal ./rootfs http://archive.ubuntu.com/ubuntu/
+```
+
+### Step 2: Establish Resource Boundaries (`cgroups` v2)
+
+Linux **Control Groups (cgroups)** handle resource accounting and limitation. Assuming a system running modern **cgroups v2**, you can restrict the memory and CPU usage of your container process manually by creating a sub-directory in the `cgroupfs` tree:
+
+```bash
+# Define your custom cgroup scope
+sudo mkdir /sys/fs/cgroup/my-experimental-container
+
+# Limit maximum memory to 500MB
+echo "524288000" | sudo tee /sys/fs/cgroup/my-experimental-container/memory.max
+
+# Limit CPU usage (e.g., max 20% of a single CPU core)
+echo "20000 100000" | sudo tee /sys/fs/cgroup/my-experimental-container/cpu.max
+```
+
+### Step 3: Instantiate Namespaces and Pivot Root (`unshare` & `chroot`)
+
+The `unshare` utility lets you detach a process from host namespaces. You will spin up a new shell isolated across **PID** (processes), **UTS** (hostname), **NET** (networking), **MOUNT** (filesystems), and **IPC** (inter-process communication) boundaries.
+
+Execute the following wrapper command as root:
+
+```bash
+sudo unshare --uts --pid --net --mount --ipc --fork \
+    chroot ./rootfs /bin/sh
+```
+
+### Step 4: Finalize the Internal Container Environment
+
+Now that you are inside the isolated container shell, you need to populate critical internal pseudofilesystems, assign the container's PID to your cgroup, and give it an independent hostname.
+
+Run these commands **inside the chroot shell**:
+
+```sh
+# 1. Mount the container-specific proc filesystem (isolates 'ps' and process tree)
+mount -t proc proc /proc
+
+# 2. Attach this shell's PID to your pre-configured cgroup boundary
+# (From inside the namespace, this shell is PID 1, but we target its global PID via proc)
+echo 1 > /sys/fs/cgroup/my-experimental-container/cgroup.procs 2>/dev/null || true
+
+# 3. Assign an independent container hostname
+hostname custom-container
+
+# Verify your isolation
+ps aux
+hostname
+```
+
+## Technical Comparison Matrix
+
+| Dimension | Native Linux Experiment | High-Level Engine (Docker / Podman) |
+| :--- | :--- | :--- |
+| **Image Standard** | Hand-crafted tarball / raw directories | Content-addressable OCI layers & configuration manifests |
+| **Process Isolation** | Manual `unshare` system calls | Managed via `containerd` and `runc` |
+| **Storage Engine** | Manual mounts or manual `OverlayFS` scripts | Automated `overlay2` storage drivers |
+| **Resource Constraints** | Manual string injection into `/sys/fs/cgroup/` | CLI arguments flag abstraction (`--cpus`, `-m`) |
+
+
+# goo : i wonder - why we need overlayfs ?? we use builtin linux features and created a universal .tgz archive able to work on any linux, the simplest lxc implementation.
+
+Вы затронули отличный вопрос. Действительно, созданный вами .tgz архив — это полностью рабочий корневой образ (rootfs), готовый для запуска простейшего контейнера. Для базовых экспериментов этого более чем достаточно.
+Однако, когда масштаб проекта увеличивается, одного архива становится мало. OverlayFS (или слоистая файловая система) нужна для решения трех критических проблем: скорости запуска, экосистемы памяти и сохранения неизменяемости (immutability).
+
+Вот главные причины, почему в контейнеризации используют OverlayFS:
+
+1. Мгновенный запуск без копирования данных
+
+Если у вас есть образ диска размером 1 ГБ, и вы хотите запустить 10 копий этого контейнера:
+• Без OverlayFS: Вам придется физически скопировать этот 1 ГБ архив 10 раз (создав 10 разных папок). Это займет много времени и сотрет ресурс вашего SSD.
+• С OverlayFS: Вы монтируете одну и ту же базовую папку (Read-Only) 10 раз, создавая для каждой копии лишь крошечный пустой слой для записи (Read-Write). Запуск всех 10 контейнеров происходит мгновенно, так как физического копирования файлов не происходит.
+
+2. Колоссальная экономия места на диске
+
+Поскольку базовая операционная система (например, ваш распакованный архив Alpine или Ubuntu) используется всеми контейнерами совместно, они не дублируют одни и те же системные файлы.
+• Если 100 контейнеров используют один базовый образ, они будут делить эти данные между собой.
+• Каждый контейнер тратит память диска только на те файлы, которые он сам изменил или создал в процессе работы.
+
+3. Гарантия чистой среды (Неизменяемость / Immutability)
+
+OverlayFS разделяет файлы на два слоя:
+1. Нижний слой (LowerDir): Ваш базовый архив. Он монтируется в режиме «только для чтения». Контейнер физически не может его испортить или удалить из него файлы.
+2. Верхний слой (UpperDir): Слой изменений. Если процесс внутри контейнера попытается перезаписать системный файл (например, /etc/hosts), OverlayFS применит механизм Copy-on-Write (копирование при записи). Она скопирует этот файл в верхний слой и изменит его там.
+Когда контейнер завершает работу, вы можете просто удалить верхний слой (папку изменений), и ваш базовый образ останется идеально чистым, готовым к следующему запуску.
+
+Архитектура OverlayFS «на пальцах»
+
+Когда вы смотрите внутрь контейнера с OverlayFS, вы видите объединенное пространство (Merged), но на диске хоста это выглядит так:
+
+```text
+ ┌─────────────────────────────────────────────────────────┐
+ │               Объединенный вид (Merged)                 │ <── То, что видит процесс
+ └─────────────────────────────────────────────────────────┘     внутри контейнера
+      │                                       │
+      ▼                                       ▼
+ ┌───────────────────────────┐           ┌───────────────────────────┐
+ │   Верхний слой (Upper)    │           │    Нижний слой (Lower)    │
+ │   Только новые/измененные │           │   Базовый rootfs из .tgz  │ <── Общий для всех
+ │   файлы (Read-Write)      │           │   (Read-Only)             │     контейнеров
+ └───────────────────────────┘           └───────────────────────────┘
+```
+
+Как это сделать руками в вашем эксперименте?
+
+Если вы захотите добавить OverlayFS в свой проект без Docker, это делается одной стандартной командой Linux перед вызовом chroot:
+
+```
+```bash
+
+# Создаем структуру директорий
+mkdir lower upper work merged
+
+# Распаковываем ваш .tgz в lower (базовый слой)
+tar -xf alpine-minirootfs.tar.gz -C ./lower
+
+# Монтируем overlayfs в папку merged
+sudo mount -t overlay overlay -o lowerdir=./lower,upperdir=./upper,workdir=./work ./merged
+
+# Теперь запускаем контейнер, используя в качестве rootfs папку merged!
+sudo unshare --uts --pid --net --mount --ipc --fork chroot ./merged /bin/sh
+```
+
+После выхода из контейнера папка lower останется абсолютно нетронутой, а все изменения вы найдете в папке upper.
+

@@ -6,3 +6,6 @@ theme: jekyll-theme-slate
 locale: ru_RU
 site_name: "блог О.Филона"
 destination: /var/www/blog/
+sass:
+  quiet_deps: true # https://github.com/just-the-docs/just-the-docs/issues/1541
+  silence_deprecations: ['import'] # also issue #1607

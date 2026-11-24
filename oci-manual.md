@@ -13,9 +13,9 @@
 
 Началось моё приключение утром, за просмотром новостей, случайно наткнулся на [пост на хабре](https://habr.com/ru/posts/1095786/). Да, идея интересная, результат получил сразу, но попросил кое-что уточнить. Поэтому порядок вопросов/ответов немного нарушен, также почистил ответы, попытался сделать связный рассказ.
 
-Итак, продолжаем начатый спор о терминах, попросил уточнить, все мои вопросы помечены как `^## goo :`, в маркдауне выглядят как "head 1"
+Итак, продолжаем начатый спор о терминах, попросил уточнить, все мои вопросы помечены как `^### goo :`, в маркдауне выглядят как "head 3"
 
-## goo: is the docker registered trademark as windows(C) ??
+### goo: is the docker registered trademark as windows(C) ??
 
 Да, Docker — это зарегистрированная торговая марка, точно так же, как
 и Windows. Владельцем этого товарного знака является коммерческая
@@ -51,7 +51,7 @@ Linux (Open Source), само слово «Docker» и его логотип (к
 
 Но бренд, экосистема и готовые бинарные сборки Docker — это собственность Docker, Inc. Именно поэтому для крупных коммерческих компаний использование, например, утилиты Docker Desktop стало платным по подписке, хотя ядро и низкоуровневые контейнеры остаются бесплатными.
 
-## goo: ok, still wonder - who is the author of docker concept ?? as you said above, the overlayfs put docker apart from lxc
+### goo: ok, still wonder - who is the author of docker concept ?? as you said above, the overlayfs put docker apart from lxc
 
 Автором и создателем концепции Docker является франко-американский программист и предприниматель Соломон Хайкс (Solomon Hykes)
 
@@ -88,7 +88,7 @@ Linux (Open Source), само слово «Docker» и его логотип (к
 Этот вопрос я задал после прочтения эмоциональной [статьи о Соломоне Хайксе](https://www.peoples.ru/undertake/soft/solomon_hykes/).
 Gemini использует слово хакер (уст. англ. hacker: тот, кто топором бреется) в [правильном смысле - энтузиаст, виртуоз в технике](https://ophil.ru/gomelug/articles/why-linux.html#hacker).
 
-## goo: i'm shocked - solomon hykes created docker, then docker inc., leaved it and organized cncf !! the farther of docker now competes with his child ??
+### goo: i'm shocked - solomon hykes created docker, then docker inc., leaved it and organized cncf !! the farther of docker now competes with his child ??
 
 Здесь есть очень важная историческая и юридическая деталь, которая немного меняет картину. Вы правы в своих эмоциях, но Соломон Хайкс не основывал CNCF самостоятельно и никогда не воевал со своим детищем.
 
@@ -129,7 +129,7 @@ Gemini использует слово хакер (уст. англ. hacker: т�
 
 Так что «отец контейнеров» не воюет со своим ребенком — он просто отдал его взрослеть в большую ИТ-семью (CNCF), а сам ушел воспитывать нового технологического «младенца».
 
-## goo: tell the story docker vs google
+### goo: tell the story docker vs google
 
 Это была одна из самых драматичных войн в истории Кремниевой долины — Битва за оркестрацию (2014–2017 годы). На кону стоял контроль над тем, как будет устроен весь современный интернет и облачные вычисления.
 С одной стороны стоял дерзкий, молодой стартап Docker Inc. во главе с Соломоном Хайксом. С другой — технологический левиафан Google, у которого за плечами был 10-летний опыт управления миллионами контейнеров внутри собственной поисковой системы.
@@ -187,7 +187,7 @@ Google предложила Docker Inc. сотрудничество. Инжен
 
 # [Байка об Умном Ките и Мудром Борге](fable_docker.md)
 
-## goo: i see at https://github.com/docker is a big organization 33 persons and 156 repos. How many developers from that github org work directly or sponsored by Docker, Inc.
+### goo: i see at https://github.com/docker is a big organization 33 persons and 156 repos. How many developers from that github org work directly or sponsored by Docker, Inc.
 
 Цифра 33 человека на странице организации GitHub отображает исключительно тех сотрудников Docker Inc., которые вручную сделали свои профили публичными для этой конкретной организации. Реальный масштаб команды разработчиков и поддерживаемых специалистов значительно шире.
 
@@ -225,7 +225,7 @@ Docker Inc. напрямую не платит индивидуальные за
 
 По умолчанию в GitHub членство сотрудников в организации является приватным (скрытым от посторонних глаз в целях безопасности, защиты от спама и хантинга). Те 33 профиля, которые вы видите (такие как @tonistiigi — создатель BuildKit, или @thaJeztah — ключевой мейнтейнер CLI) — это лишь публичные администраторы и тимлиды, которые открыли свой статус в профиле.
 
-## goo: pls, explain, how Docker Inc. works with cncf.io ?? I know they didn't patented overlayfs, donated some container spec to OCI, communicate regarding hub.docker images repo security - what else ??
+### goo: pls, explain, how Docker Inc. works with cncf.io ?? I know they didn't patented overlayfs, donated some container spec to OCI, communicate regarding hub.docker images repo security - what else ??
 
 Взаимоотношения Docker Inc. и фонда CNCF (Cloud Native Computing Foundation) — это классический пример стратегии «coopetition» (сотрудничество + конкуренция).
 
@@ -270,7 +270,7 @@ Docker Inc. активно поддерживает проект CNCF Buildpacks
 
 Простыми словами: CNCF отвечает за стандарты, безопасность и работу контейнеров под капотом огромных серверных кластеров (Data Centers), а Docker Inc. фокусируется на том, чтобы локальная разработка на компьютерах программистов оставалась удобной, быстрой и бесшовно интегрировалась в эти самые кластеры.
 
-## goo: which docker technologies dropped and which still in use in k8s
+### goo: which docker technologies dropped and which still in use in k8s
 
 Здесь кроется ключевое архитектурное заблуждение, с которым сталкиваются многие разработчики. Kubernetes не отказывался от containerd. Более того, containerd является абсолютным стандартом и дефолтным движком (Runtime) для большинства K8s-кластеров в мире (включая управляемые облака AWS EKS, Google GKE и Azure AKS).
 
@@ -381,7 +381,7 @@ Docker Inc. вовремя поняла, что проиграла войну з
 ## 🚀 Шпаргалка: От Docker к Kubernetes через Podman, [см. файл podman_to_k8s_cheatsheet.md](https://ophil.ru/blog/podman_to_k8s_cheatsheet.md)
 Самый первый вопрос, с которого началась беседа, оказался в самом конце. Google уже на втором вопросе вычислил что я русскоязычный, его первый ответ не стал переводить.
 
-## goo: let's make container experiment - use linux namespaces, cgroups, chroot, but neither docker nor podman to create oci (open container initiative) image
+### goo: let's make container experiment - use linux namespaces, cgroups, chroot, but neither docker nor podman to create oci (open container initiative) image
 
 ## Reference Guide: Building a Linux Container from Scratch
 
@@ -464,7 +464,7 @@ hostname
 | **Resource Constraints** | Manual string injection into `/sys/fs/cgroup/` | CLI arguments flag abstraction (`--cpus`, `-m`) |
 
 
-## goo: i wonder - why we need overlayfs ?? we use builtin linux features and created a universal .tgz archive able to work on any linux, the simplest lxc implementation.
+### goo: i wonder - why we need overlayfs ?? we use builtin linux features and created a universal .tgz archive able to work on any linux, the simplest lxc implementation.
 
 Вы затронули важный вопрос. Действительно, созданный вами .tgz архив — это полностью рабочий корневой образ (rootfs), готовый для запуска простейшего контейнера. Для базовых экспериментов этого более чем достаточно.
 

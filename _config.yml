@@ -1,5 +1,5 @@
 title: "блог local"
-description: proba Jekyll themes for personal blog
+description: о программировании и не только
 baseurl: "/blog" # the subpath of your site, e.g. /blog
 url: "https://ophils.localnet" #
 theme: jekyll-theme-slate
